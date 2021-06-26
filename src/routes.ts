@@ -4,6 +4,7 @@ import { CreateComplimentController } from './controllers/CreateComplimentContro
 import { CreateTagController } from './controllers/CreateTagController';
 import { CreateUserController } from './controllers/CreateUserController';
 import { ListUserReceiveComplimentsController } from './controllers/ListUserReceiveComplimentsController';
+import { ListUserSendComplimentsController } from './controllers/ListUserSendComplimentsController';
 import { ensureAdmin } from './middlewares/ensureAdmin';
 import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
 
@@ -15,6 +16,8 @@ const authenticateUserController = new AuthenticateUserController();
 const createComplimentController = new CreateComplimentController();
 const listUserReceiveComplimentsController =
   new ListUserReceiveComplimentsController();
+const listUserSendComplimentsController =
+  new ListUserSendComplimentsController();
 
 router.post('/users', createUserController.handle);
 router.post(
@@ -30,9 +33,14 @@ router.post(
   createComplimentController.handle
 );
 router.get(
-  '/compliments/receive',
+  '/users/compliments/receive',
   ensureAuthenticated,
   listUserReceiveComplimentsController.handle
+);
+router.get(
+  '/users/compliments/send',
+  ensureAuthenticated,
+  listUserSendComplimentsController.handle
 );
 
 export { router };
